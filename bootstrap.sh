@@ -25,6 +25,9 @@ get checkpoints "https://civitai.com/api/download/models/230869?type=Model&forma
 # get checkpoints "https://civitai.com/api/download/models/9355?type=Pruned%20Model&format=SafeTensor&size=pruned&fp=fp16" # alternate aom2
 
 get embeddings "https://civitai.com/api/download/models/9208?type=Model&format=SafeTensor&size=full&fp=fp16" # ez neg
+get embeddings "https://civitai.com/api/download/models/134583?type=Model&format=SafeTensor" # negativexl
+
 get upscale_models "https://civitai.com/api/download/models/125843?type=Model&format=PickleTensor" # 4x ultra sharp
+
 wget "https://huggingface.co/hakurei/waifu-diffusion-v1-4/resolve/main/vae/kl-f8-anime2.ckpt" -O "$PREFIX/vae/kl-f8-anime2.ckpt"
 wget "https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors" -O "$PREFIX/vae/sdxl_vae.safetensors"
