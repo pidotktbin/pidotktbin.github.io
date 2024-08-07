@@ -15,5 +15,13 @@ wget -O cloudflared-linux-amd64.deb "$deb"
 dpkg -i cloudflared-linux-amd64.deb
 rm cloudflared-linux-amd64.deb
 
+release=$(curl -s https://api.github.com/repos/schollz/croc/releases/latest)
+tarball=$(echo "$release" | jq -r '.assets[] | select(.name | endswith("_Linux-64bit.tar.gz")) | .browser_download_url')
+wget -O croc_Linux-64bit.tar.gz "$tarball"
+tar -xzf croc_Linux-64bit.tar.gz croc
+mv croc /bin
+rm croc_Linux-64bit.tar.gz
+
+
 grep -q '~/.local/bin' ~/.bashrc && echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
