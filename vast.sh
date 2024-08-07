@@ -22,6 +22,7 @@ tar -xzf croc_Linux-64bit.tar.gz croc
 mv croc /bin
 rm croc_Linux-64bit.tar.gz
 
+ln -sf /bin/python3 /bin/python
 
 grep -q '~/.local/bin' ~/.bashrc && echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
