@@ -13,6 +13,7 @@ get() {
 }
 
 get checkpoints "https://civitai.com/api/download/models/493469?type=Model&format=SafeTensor&size=full&fp=fp16" # pvc
+# get checkpoints "https://civitai.com/api/download/models/673299?type=Model&format=SafeTensor&size=full&fp=bf16" # tponyai
 get checkpoints "https://civitai.com/api/download/models/290640?type=Model&format=SafeTensor&size=pruned&fp=fp16" # ponyxl
 get checkpoints "https://civitai.com/api/download/models/108289?type=Model&format=SafeTensor&size=pruned&fp=fp16" # meina pastel
 get checkpoints "https://civitai.com/api/download/models/230869?type=Model&format=SafeTensor&size=pruned&fp=fp16" # gyoza
@@ -21,6 +22,8 @@ get checkpoints "https://civitai.com/api/download/models/48881?type=Model&format
 get checkpoints "https://civitai.com/api/download/models/105924?type=Model&format=SafeTensor&size=pruned&fp=fp16" # cetus
 get checkpoints "https://civitai.com/api/download/models/5038?type=Model&format=SafeTensor&size=full&fp=fp16" # aom2 hard
 get checkpoints "https://civitai.com/api/download/models/9355?type=Pruned%20Model&format=SafeTensor&size=pruned&fp=fp16" # alternate aom2
-# tponyai, login required
-# get checkpoints "https://civitai.com/api/download/models/673299?type=Model&format=SafeTensor&size=full&fp=bf16"
+
 get embeddings "https://civitai.com/api/download/models/9208?type=Model&format=SafeTensor&size=full&fp=fp16" # ez neg
+get upscale_models "https://civitai.com/api/download/models/125843?type=Model&format=PickleTensor" # 4x ultra sharp
+wget "https://huggingface.co/hakurei/waifu-diffusion-v1-4/resolve/main/vae/kl-f8-anime2.ckpt" -O "$PREFIX/vae/kl-f8-anime2.ckpt"
+wget "https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors" -O "$PREFIX/vae/sdxl_vae.safetensors"
