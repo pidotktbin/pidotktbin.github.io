@@ -9,5 +9,12 @@ apt-get install ffmpeg libsm6 libxext6  -y
 pip install pipx
 pipx install bpytop nvitop
 
+release=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest); 
+deb=$(echo "$release" | jq -r '.assets[] | select(.name | endswith("amd64.deb")) | .browser_download_url'); 
+wget -O cloudflared_amd64.deb "$deb"; 
+dpkg -i cloudflared_amd64.deb; 
+rm cloudflared_amd64.deb
+
+
 echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
