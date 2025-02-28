@@ -2538,61 +2538,19 @@ RegChange "SOFTWARE\Microsoft\CTF\LangBar" "Label" "1" "Fix language bar..." "DW
 RegChange "SOFTWARE\Microsoft\CTF\LangBar" "ShowStatus" "4" "Fix language bar..." "DWord"
 RegChange "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "CTFMON" "ctfmon.exe" "Fix typing in windows search bar..." "String"
 
-$visual = Read-Host "Install Initial Packages? (y/n)"
+#SHOW HIDDEN FILES AND EXTENSIONS
 
-while("y","n" -notcontains $visual)
-{
-	$visual = Read-Host "y or n?"
-}
+$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+Set-ItemProperty $key Hidden 1
+if($?){   write-Host -ForegroundColor Green "Windows Hidden Files Disabled"  }else{   write-Host -ForegroundColor red "Windows Hidden Files not Disabled" }
 
-$showhidden = Read-Host "Show hidden files and extensions (y/n)"
-while("y","n" -notcontains $showhidden)
-{
-	$showhidden = Read-Host "y or n?"
-}
-
-$ink = Read-Host "Disable Windows INK (y/n)"
-while("y","n" -notcontains $ink)
-{
-	$ink = Read-Host "y or n?"
-}
-
-if ($showhidden -like "y") { 
-	#SHOW HIDDEN FILES AND EXTENSIONS
-
-	$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-	Set-ItemProperty $key Hidden 1
-	if($?){   write-Host -ForegroundColor Green "Windows Hidden Files Disabled"  }else{   write-Host -ForegroundColor red "Windows Hidden Files not Disabled" }
-
-	Set-ItemProperty $key HideFileExt 0
-	if($?){   write-Host -ForegroundColor Green "Windows Hidden Extensions Disabled"  }else{   write-Host -ForegroundColor red "Windows Hidden Extensions Options not Disabled" }
-}
+Set-ItemProperty $key HideFileExt 0
+if($?){   write-Host -ForegroundColor Green "Windows Hidden Extensions Disabled"  }else{   write-Host -ForegroundColor red "Windows Hidden Extensions Options not Disabled" }
 
 
-if ($ink -like "y") { 
-	#Disable INK
-	New-ItemProperty -Path HKLM:SOFTWARE\Policies\Microsoft -Name WindowsInkWorkspace -PropertyType DWord -Value 0 -Force -EA SilentlyContinue | Out-Null
-	if($?){   write-Host -ForegroundColor Green "Windows INK disabled"  }else{   write-Host -ForegroundColor red "Windows INK not disabled" } 
-}
-
-if ($visual -like "y") { 
-	Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-	choco install vcredist-all -y 
-	choco install vcredist2010 -y
-	choco install vcredist2017 -y
-	choco install dotnet4.0 -y 
-	choco install dotnet4.5 -y 
-	choco install dotnetfx -y
-	choco install directx -y
-	choco install dotnetcore -y
-	choco install dotnet-runtime -y
-	
-	choco install qbittorrent -y
-	choco install k-litecodecpackfull -y
-	choco install imageglass -y
-	choco install 7zip.install -y
-	choco install vscode -y
-}
+#Disable INK
+New-ItemProperty -Path HKLM:SOFTWARE\Policies\Microsoft -Name WindowsInkWorkspace -PropertyType DWord -Value 0 -Force -EA SilentlyContinue | Out-Null
+if($?){   write-Host -ForegroundColor Green "Windows INK disabled"  }else{   write-Host -ForegroundColor red "Windows INK not disabled" } 
 
 # Disable ShadowCopy
 vssadmin delete shadows /all /quiet | Out-Null
