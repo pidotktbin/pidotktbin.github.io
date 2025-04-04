@@ -1674,9 +1674,6 @@ if ($doPrivacyStuff -eq 0) {
 	Write-Host "Stopping and disabling EventLog (Windows Event Log)..."
 	Get-Service EventLog | Set-Service -StartupType automatic
 	
-	# Disable Ip helper due transfering a lot of strange data
-	RegChange "SYSTEM\CurrentControlSet\Services\iphlpsvc" "Start" "2" "Enabling Ip Helper service" "DWord"
-	Get-Service iphlpsvc | Set-Service -StartupType automatic
 
 	Write-Host "Enabling Nvidia Telemetry service..."
 	Get-Service NvTelemetryContainer | Stop-Service -PassThru | Set-Service -StartupType automatic
@@ -1836,9 +1833,6 @@ if ($doPrivacyStuff -eq 1) {
 	# Write-Host "Stopping and disabling EventLog (Windows Event Log)..."
 	# Get-Service EventLog | Stop-Service -PassThru | Set-Service -StartupType disabled	
 		
-	# Disable Ip helper due transfering a lot of strange data
-	RegChange "SYSTEM\CurrentControlSet\Services\iphlpsvc" "Start" "4" "Disabling Ip Helper service" "DWord"
-	Get-Service iphlpsvc | Set-Service -StartupType disabled
 
 	Write-Host "Disabling Nvidia Telemetry service..."
 	Get-Service NvTelemetryContainer | Stop-Service -PassThru | Set-Service -StartupType disabled
@@ -1891,9 +1885,7 @@ if ($doSecurityStuff -eq 0) {
 	
 	Write-Host "Enabling Network Location Awareness Service..."
 	Enable-NetAdapterBinding -Name "*" -ComponentID "ms_msclient"	
-	
-	Write-Host "Enabling Network Location Awareness Service..."
-	Get-Service NlaSvc | Set-Service -StartupType automatic
+
 }
 
 if ($doSecurityStuff -eq 1) {
@@ -1949,18 +1941,6 @@ if ($doSecurityStuff -eq 1) {
 	#Windows 10 must be configured to enable Remote host allows delegation of non-exportable credentials. (Stig Viewer V-74699)
 	RegChange "SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation" "AllowProtectedCreds" "1" "Hardening LSASS... " "DWord"
 
-	if ($beNetworkFolderSafe -eq 0) {
-		Write-Host "Disabling Network Location Awareness Service..."
-		Disable-NetAdapterBinding -Name "*" -ComponentID "ms_msclient"
-		
-		Write-Host "Disabling Network Location Awareness Service..."
-		Get-Service NlaSvc | Set-Service -StartupType disabled
-	}
-	
-	if ($beNetworkFolderSafe -eq 1) {
-		Write-Host "Enabling Network Location Awareness Service..."
-		Get-Service NlaSvc | Set-Service -StartupType automatic
-	}
 }
 
 if ($doFingerprintPrevention -eq 0) {
